@@ -1,4 +1,3 @@
-//webkitURL is deprecated but nevertheless
 URL = window.URL || window.webkitURL;
 
 var gumStream; 						//stream from getUserMedia()
@@ -13,10 +12,16 @@ var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 var pauseButton = document.getElementById("pauseButton");
 
+
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
 pauseButton.addEventListener("click", pauseRecording);
+
+$().ready(function () {
+	console.log("ready!");
+	$( ".myClass" ).hide();
+});
 
 function startRecording() {
 	console.log("recordButton clicked");
@@ -94,6 +99,13 @@ function pauseRecording() {
 	}
 }
 
+function showImages(locationName) {
+	$( ".myClass" ).hide();
+	if (locationName == "Hoàn Kiếm") {
+		$( ".myClass" ).show();
+	}
+}
+
 function stopRecording() {
 	console.log("stopButton clicked");
 
@@ -123,7 +135,7 @@ function createDownloadLink(blob) {
 	var link = document.createElement('a');
 
 	//name of .wav file to use during upload and download (without extendion)
-	var filename = 'hoankiem';
+	var filename = 'record';
 
 	//add controls to the <audio> element
 	au.controls = true;
@@ -155,7 +167,7 @@ function createDownloadLink(blob) {
 		var fd = new FormData();
 		fd.append("fileRecord", blob, filename);
 		$.ajax({
-			url: 'http://localhost:8080/translation/read-file',
+			url: 'https://demo-translate-zovivo.herokuapp.com/translation/read-file',
 			type: 'post',
 			dataType: 'json',
 			cache: false,
@@ -166,6 +178,7 @@ function createDownloadLink(blob) {
 				if (data) {
 					console.log(data);
 					result.innerHTML = "Result: " + data.data;
+					showImages(data.data);
 				}
 			},
 		});
