@@ -144,25 +144,25 @@ function createDownloadLink(blob) {
 	//save to disk link
 	link.href = url;
 	link.download = filename + ".wav"; //download forces the browser to donwload the file using the  filename
-	link.innerHTML = "Save to disk";
+	//link.innerHTML = "Save to disk";
 
 	//add the new audio element to li
 	li.appendChild(au);
 
 	//add the filename to the li
-	li.appendChild(document.createTextNode(filename + ".wav "))
+	//li.appendChild(document.createTextNode(filename + ".wav "))
 
 	//add the save to disk link to li
-	li.appendChild(link);
+	//li.appendChild(link);
 
-	//upload link
-	var upload = document.createElement('a');
-	var upload = document.createElement('a');
-	upload.href = "#";
-	upload.innerHTML = "Translate";
+	//upload lin
+	var upload = document.getElementById("translate");
+	// var upload = document.createElement('a');
+	// upload.href = "#";
+	// upload.innerHTML = "Translate";
 	upload.addEventListener("click", function (event) {
 		event.preventDefault()
-		var result = document.getElementById("result");
+		var result = $("#translateResult");
 		result.innerHTML = "Waiting for result";
 		var fd = new FormData();
 		fd.append("fileRecord", blob, filename);
@@ -177,7 +177,7 @@ function createDownloadLink(blob) {
 			success: function (data) {
 				if (data) {
 					console.log(data);
-					result.innerHTML = "Result: " + data.data;
+					result.val(data.data);
 					showImages(data.data);
 				}
 			},
@@ -186,7 +186,7 @@ function createDownloadLink(blob) {
 
 	})
 	li.appendChild(document.createTextNode(" "))//add a space in between
-	li.appendChild(upload)//add the upload link to li
+	// li.appendChild(upload)//add the upload link to li
 
 	//add the li element to the ol
 	recordingsList.appendChild(li);
