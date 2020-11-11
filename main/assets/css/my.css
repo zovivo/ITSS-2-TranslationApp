@@ -1,0 +1,19 @@
+.height-100{
+    height: 100vh!important;
+}
+.marg-left-45{
+    margin-left: 45px!important;
+}
+.record-button{
+    border-radius: 18px!important;
+    height: 37px;
+    margin: 0px 15px 0 0;
+}
+.pause{
+    display: none!important;
+}
+.translate-button{
+    border-radius: 18px!important;
+    height: 37px;
+    margin: 0px 15px 0 15px;
+}
