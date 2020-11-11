@@ -162,7 +162,7 @@ function createDownloadLink(blob) {
 	// upload.innerHTML = "Translate";
 	upload.addEventListener("click", function (event) {
 		event.preventDefault()
-		var result = $("#translateResult");
+		var result = $("#resultTranslate");
 		result.innerHTML = "Waiting for result";
 		var fd = new FormData();
 		fd.append("fileRecord", blob, filename);
