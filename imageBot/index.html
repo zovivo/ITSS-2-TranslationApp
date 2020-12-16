@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <title>Images Recogition Bot</title>
+  <title>Images Recognition Bot</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,8 +54,7 @@
 
     <!-- Jumbotron Header -->
     <header class="jumbotron">
-      <h1 class="display-3">Hello I am Images Recogition Bot</h1>
-      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo su  nt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+      <h1 class="display-3">Images Recognition Bot</h1>
       <div class="container">
         <div class="row">
           <div class="col header-content">
@@ -62,7 +62,7 @@
 								<br>
     							<img id="blah" src="#" alt="your image" class="margin-top-left none"/>
 								<br>
-								<button id="start-button" class="btn btn-primary btn-lg margin-top-left none" type='button' onclick='go()'>Start</button>
+								<button id="start-button" class="btn btn-primary btn-lg margin-top-left none" type='button' onclick='start()'>Start</button>
 								<br>
     							<!-- <div id='webcam-container'></div> -->
     							<div id='label1-container'></div>
@@ -71,11 +71,12 @@
             <ul class="list-group">
               <li class="list-group-item">
                 <h3>Vietnamese</h3>
-                <h5>Vietnam</h5>
+                <input type="text" readonly class="form-control-plaintext" id="vietnameseResult" value="...">
+
               </li>
               <li class="list-group-item">
                 <h3>Japanese</h3>
-                <h5>nihongo</h5>
+                <input type="text" readonly class="form-control-plaintext" id="japaneseResult" value="...">
               </li>
              
             </ul>
@@ -84,76 +85,40 @@
       
     </header>
 
-    <!-- Page Features -->
-    <div class="row text-center none">
+    <div id="listImages" class="row text-center none">
 
       <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">
           <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
         </div>
       </div>
 
       <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">
           <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
         </div>
       </div>
 
       <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">
           <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
         </div>
       </div>
 
       <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">
           <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
         </div>
       </div>
 
     </div>
-    <!-- /.row -->
-
   </div>
-  <!-- /.container -->
-
-  <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
     </div>
-    <!-- /.container -->
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://use.fontawesome.com/97a7f2132a.js"></script>

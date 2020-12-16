@@ -1,65 +1,101 @@
-    // More API functions here:
-    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+const URL = "https://teachablemachine.withgoogle.com/models/kfciZHdP_/";
 
-    // the link to your model provided by Teachable Machine export panel
-    const URL = "https://teachablemachine.withgoogle.com/models/_tT8PRctS/";
+let model, webcam, labelContainer, maxPredictions;
 
-    let model, webcam, labelContainer, maxPredictions;
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    $('#blah').removeClass('none')
+    $('#start-button').removeClass('none')
+    $('.header-content').removeClass('header-content')
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#blah')
+        .attr('src', e.target.result)
+        .width(150)
+        .height(200);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+async function start() {
 
-    // Load the image model and setup the webcam
-    
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-          $('#blah').removeClass('none')
-          $('#start-button').removeClass('none')
-          $('.header-content').removeClass('header-content')
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#blah')
-              .attr('src', e.target.result)
-              .width(150)
-              .height(200);
-          };
-          reader.readAsDataURL(input.files[0]);
-        }
+  const modelURL = URL + 'model.json';
+  const metadataURL = URL + 'metadata.json';
+
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+
+  labelContainer = document.getElementById('label1-container');
+  for (let i = 0; i < maxPredictions; i++) { // and class labels
+    labelContainer.appendChild(document.createElement('div'));
+  }
+
+  await predict();
+
+}
+async function predict() {
+  var img = document.querySelector('#blah')
+  const prediction = await model.predict(img);
+  $('.sub').removeClass('none')
+  $('.text-center').removeClass('none')
+  let maxPredictionClass = {
+    name: prediction[0].className,
+    probability: prediction[0].probability
+  };
+  for (let i = 0; i < maxPredictions; i++) {
+    if (prediction[i].probability > maxPredictionClass.probability) {
+      maxPredictionClass.name = prediction[i].className;
+      maxPredictionClass.probability = prediction[i].probability;
+    }
+    // const classPrediction =
+    //   prediction[i].className + ': ' + prediction[i].probability.toFixed(2) * 100 + '%';
+    // labelContainer.childNodes[i].innerHTML = classPrediction;
+  }
+  await getData(maxPredictionClass);
+}
+
+async function getData(maxPredictionClass) {
+  console.log(maxPredictionClass);
+  $.ajax({
+    url: 'http://localhost:8080/dish/get-by-name?name=' + maxPredictionClass.name,
+    type: 'get',
+    dataType: 'json',
+    cache: false,
+    success: function (data) {
+      if (data) {
+        console.log(data);
+        setResult(data.data);
       }
-    async function go() {
-      
-        const modelURL = URL + 'model.json';
-        const metadataURL = URL + 'metadata.json';
+    },
+  });
+}
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // or files from your local hard drive
-        model = await tmImage.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+function setResult(dish) {
+  console.log("dish");
+  console.log(dish);
+  var vietnameseResult = $("#vietnameseResult");
+  var japaneseResult = $("#japaneseResult");
+  console.log(vietnameseResult);
+  vietnameseResult.val(dish.vietnameseName);
+  japaneseResult.val(dish.japaneseName);
+  showImages(dish.restaurants);
+}
 
-        // Convenience function to setup a webcam
-        // const flip = true; // whether to flip the webcam
-        // webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-        // await webcam.setup(); // request access to the webcam
-        // webcam.play();
-        // window.requestAnimationFrame(loop);
-
-        labelContainer = document.getElementById('label1-container');
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement('div'));
-        }
-
-        await predict1();
-        // append elements to the DOM
-        
-        
-    }
-    async function predict1() {
-        // predict can take in an image, video or canvas html element
-        var img = document.querySelector('#blah')
-        const prediction = await model.predict(img);
-        $('.sub').removeClass('none')
-        $('.text-center').removeClass('none')
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-				prediction[i].className + ': ' + prediction[i].probability.toFixed(2) * 100 + '%';
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
-    }
+function showImages(restaurants) {
+  $("#listImages").empty();
+  if (restaurants.length > 0) {
+    var listImage = "";
+    restaurants.map((restaurant) => {
+      listImage += '<div class="col-lg-3 col-md-6 mb-4">'
+        + '<div class="card h-100">'
+        + '<img class="card-img-top" src="' + restaurant.image + '" alt="">'
+        + '<div class="card-body">'
+        + '<h4 class="card-title">' + restaurant.name + '</h4>'
+        + '<p class="card-text">' + restaurant.address + '</p>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+    });
+    $('#listImages').append(listImage);
+  }
+}
