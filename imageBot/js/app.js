@@ -57,7 +57,7 @@ async function predict() {
 async function getData(maxPredictionClass) {
   console.log(maxPredictionClass);
   $.ajax({
-    url: 'http://localhost:8080/dish/get-by-name?name=' + maxPredictionClass.name,
+    url: 'https://demo-translate-zovivo.herokuapp.com/dish/get-by-name?name=' + maxPredictionClass.name,
     type: 'get',
     dataType: 'json',
     cache: false,
