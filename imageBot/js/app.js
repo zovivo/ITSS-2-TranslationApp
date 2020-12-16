@@ -47,15 +47,11 @@ async function predict() {
       maxPredictionClass.name = prediction[i].className;
       maxPredictionClass.probability = prediction[i].probability;
     }
-    // const classPrediction =
-    //   prediction[i].className + ': ' + prediction[i].probability.toFixed(2) * 100 + '%';
-    // labelContainer.childNodes[i].innerHTML = classPrediction;
   }
   await getData(maxPredictionClass);
 }
 
 async function getData(maxPredictionClass) {
-  console.log(maxPredictionClass);
   $.ajax({
     url: 'https://demo-translate-zovivo.herokuapp.com/dish/get-by-name?name=' + maxPredictionClass.name,
     type: 'get',
@@ -63,7 +59,6 @@ async function getData(maxPredictionClass) {
     cache: false,
     success: function (data) {
       if (data) {
-        console.log(data);
         setResult(data.data);
       }
     },
@@ -71,11 +66,8 @@ async function getData(maxPredictionClass) {
 }
 
 function setResult(dish) {
-  console.log("dish");
-  console.log(dish);
   var vietnameseResult = $("#vietnameseResult");
   var japaneseResult = $("#japaneseResult");
-  console.log(vietnameseResult);
   vietnameseResult.val(dish.vietnameseName);
   japaneseResult.val(dish.japaneseName);
   showImages(dish.restaurants);
